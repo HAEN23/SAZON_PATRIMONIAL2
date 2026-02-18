@@ -1,0 +1,67 @@
+.container {
+  font-family: Arial, Helvetica, sans-serif;
+  background: #f5f5f5;
+  min-height: 100vh;
+}
+
+.header {
+  background: #6b1e1e;
+  padding: 20px 40px;
+  color: white;
+}
+
+.headerContent {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logoSection {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 1.3rem;
+}
+
+.logout {
+  background: #912f2f;
+  border: none;
+  padding: 10px 18px;
+  color: white;
+  border-radius: 30px;
+  cursor: pointer;
+}
+
+.logout:hover {
+  background: #b64040;
+}
+
+.main {
+  padding: 140px 40px 40px 40px;
+  text-align: center;
+}
+
+.main h1 {
+  color: #912f2f;
+  margin-bottom: 40px;
+}
+
+.grid {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.card {
+  background: white;
+  border: 2px solid #912f2f;
+  border-radius: 12px;
+  padding: 20px;
+  width: 350px;
+  color: #912f2f;
+}
+
+.bigNumber {
+  font-size: 2.5rem;
+}

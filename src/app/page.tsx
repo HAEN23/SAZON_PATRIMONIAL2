@@ -1,65 +1,251 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
+import styles from "./page.module.css";
+
+interface Restaurante {
+  id?: number;
+  id_restaurantero?: number;
+  correo?: string;
+  nombre_propuesto_restaurante?: string;
+  restaurante?: string;
+  estado?: string;
+  etiqueta1?: string;
+  etiqueta2?: string;
+  etiqueta3?: string;
+}
 
 export default function Home() {
+  const router = useRouter();
+
+  const [restaurantes, setRestaurantes] = useState<Restaurante[]>([]);
+  const [busqueda, setBusqueda] = useState("");
+  const [filtroTipo, setFiltroTipo] = useState("");
+  const [filtroAmbiente, setFiltroAmbiente] = useState("");
+  const [filtroServicios, setFiltroServicios] = useState("");
+
+  useEffect(() => {
+    cargarRestaurantes();
+  }, []);
+
+  async function cargarRestaurantes() {
+    try {
+      const response = await fetch(
+        "http://52.23.26.163:7070/solicitudes"
+      );
+      const data = await response.json();
+
+      const solicitudes = data.data || data;
+
+      const aprobados = solicitudes.filter(
+        (r: Restaurante) =>
+          r.estado?.toLowerCase() === "aprobado"
+      );
+
+      setRestaurantes(aprobados);
+    } catch (error) {
+      console.error("Error cargando restaurantes:", error);
+    }
+  }
+
+  function restauranteTieneEtiqueta(
+    restaurante: Restaurante,
+    etiqueta: string
+  ) {
+    if (!etiqueta) return true;
+
+    const etiquetas = [
+      restaurante.etiqueta1,
+      restaurante.etiqueta2,
+      restaurante.etiqueta3,
+    ].filter(Boolean);
+
+    return etiquetas.some(
+      (e) => e?.toLowerCase() === etiqueta.toLowerCase()
+    );
+  }
+
+  const restaurantesFiltrados = restaurantes.filter((r) => {
+    const nombre =
+      r.nombre_propuesto_restaurante || r.restaurante || "";
+
+    const coincideBusqueda =
+      !busqueda ||
+      nombre.toLowerCase().includes(busqueda.toLowerCase());
+
+    const coincideTipo = restauranteTieneEtiqueta(
+      r,
+      filtroTipo
+    );
+    const coincideAmbiente = restauranteTieneEtiqueta(
+      r,
+      filtroAmbiente
+    );
+    const coincideServicios = restauranteTieneEtiqueta(
+      r,
+      filtroServicios
+    );
+
+    return (
+      coincideBusqueda &&
+      coincideTipo &&
+      coincideAmbiente &&
+      coincideServicios
+    );
+  });
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+    <div className={styles.container}>
+      {/* HEADER */}
+      <header className={styles.header}>
+        <div className={styles.headerContent}>
+          <div className={styles.logoSection}>
             <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
+              src="/images/logo_sp_blanco.png"
+              alt="Logo"
+              width={80}
+              height={80}
             />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+            <span>Restaurantes San Cristóbal</span>
+          </div>
+
+          <div className={styles.actions}>
+            <button onClick={() => router.push("/registro")}>
+              Registrarse
+            </button>
+            <button onClick={() => router.push("/login")}>
+              Iniciar sesión
+            </button>
+          </div>
         </div>
-      </main>
+      </header>
+
+      {/* HERO */}
+      <section className={styles.hero}>
+        <Image
+          src="/images/fondo_inicio.png"
+          alt="Fondo"
+          fill
+          className={styles.heroImage}
+        />
+
+        <div className={styles.heroContent}>
+          <h1>
+            Descubre la Magia Culinaria de
+            <br />
+            San Cristóbal
+          </h1>
+          <p>Explora los mejores sabores de esta tierra</p>
+
+          <div className={styles.searchBar}>
+            <input
+              type="text"
+              placeholder="Buscar restaurantes"
+              value={busqueda}
+              onChange={(e) =>
+                setBusqueda(e.target.value)
+              }
+            />
+          </div>
+
+          {/* FILTROS */}
+          <div className={styles.filters}>
+            <select
+              value={filtroTipo}
+              onChange={(e) =>
+                setFiltroTipo(e.target.value)
+              }
+            >
+              <option value="">Tipo de comida</option>
+              <option value="Comida Rápida">
+                Comida Rápida
+              </option>
+              <option value="Gourmet">Gourmet</option>
+              <option value="Vegetariano">
+                Vegetariano
+              </option>
+              <option value="Económico">
+                Económico
+              </option>
+            </select>
+
+            <select
+              value={filtroAmbiente}
+              onChange={(e) =>
+                setFiltroAmbiente(e.target.value)
+              }
+            >
+              <option value="">Ambiente</option>
+              <option value="Familiar">Familiar</option>
+              <option value="Pet Friendly">
+                Pet Friendly
+              </option>
+              <option value="Terraza">Terraza</option>
+            </select>
+
+            <select
+              value={filtroServicios}
+              onChange={(e) =>
+                setFiltroServicios(e.target.value)
+              }
+            >
+              <option value="">Servicios</option>
+              <option value="Delivery">Delivery</option>
+              <option value="WiFi Gratuito">
+                WiFi Gratuito
+              </option>
+              <option value="Estacionamiento">
+                Estacionamiento
+              </option>
+            </select>
+
+            <button
+              onClick={() => {
+                setBusqueda("");
+                setFiltroTipo("");
+                setFiltroAmbiente("");
+                setFiltroServicios("");
+              }}
+            >
+              Limpiar
+            </button>
+          </div>
+        </div>
+      </section>
+
+      {/* RESTAURANTES */}
+      <section className={styles.cards}>
+        {restaurantesFiltrados.length === 0 ? (
+          <p>No se encontraron restaurantes.</p>
+        ) : (
+          restaurantesFiltrados.map((r, index) => (
+            <div
+              key={index}
+              className={styles.card}
+              onClick={() =>
+                router.push(
+                  `/vistaRestaurante?id=${
+                    r.id || ""
+                  }`
+                )
+              }
+            >
+              <Image
+                src="/images/img_rest2.jpg"
+                alt="Restaurante"
+                width={300}
+                height={200}
+              />
+              <h3>
+                {r.nombre_propuesto_restaurante ||
+                  r.restaurante}
+              </h3>
+            </div>
+          ))
+        )}
+      </section>
     </div>
   );
 }

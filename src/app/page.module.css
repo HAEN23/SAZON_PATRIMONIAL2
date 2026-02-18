@@ -1,0 +1,224 @@
+/* RESET GENERAL */
+.container {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    overflow-x: hidden;
+}
+
+/* ================= HEADER ================= */
+
+.header {
+    position: fixed;
+    top: 0;
+    z-index: 1000;
+    width: 100%;
+    background: #6b1e1e;
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+.headerContent {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100px;
+    padding-left: 40px;
+    padding-right: 40px;
+    gap: 32px;
+}
+
+.logoSection {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logoSection span {
+    font-size: 1.6rem;
+    font-weight: 400;
+    font-family: 'Montserrat', sans-serif;
+    color: #fff;
+    max-width: 200px;
+}
+
+.actions {
+    display: flex;
+    gap: 18px;
+    margin-left: auto;
+}
+
+.actions button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #6A1E1E;
+    border: none;
+    border-radius: 50px;
+    color: #fff;
+    padding: 12px 22px;
+    font-size: 1rem;
+    font-family: 'Montserrat', sans-serif;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.actions button:hover {
+    background: #912f2f;
+}
+
+/* ================= HERO ================= */
+
+.hero {
+    position: relative;
+    width: 100%;
+    height: 700px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: #000000;
+    margin-top: 100px;
+}
+
+.heroImage {
+    object-fit: cover;
+    opacity: 0.7;
+    z-index: 1;
+}
+
+.heroContent {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.heroContent h1 {
+    font-size: 2.8rem;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bold;
+    color: #fff;
+    text-shadow: 1px 1px 8px #000;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.heroContent p {
+    font-size: 1.2rem;
+    font-family: 'Montserrat', sans-serif;
+    color: #fff;
+    text-shadow: 1px 1px 8px #000;
+    margin-bottom: 24px;
+    text-align: center;
+}
+
+/* ================= BUSQUEDA ================= */
+
+.searchBar {
+    display: flex;
+    align-items: center;
+    background: #fff;
+    border-radius: 25px;
+    padding: 8px 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    width: 680px;
+    max-width: 90%;
+    margin: 0 auto;
+}
+
+.searchBar input {
+    border: none;
+    outline: none;
+    font-size: 1rem;
+    flex: 1;
+    background: transparent;
+    padding: 8px 0;
+    color: #912F2F;
+}
+
+.searchBar input::placeholder {
+    color: #912F2F;
+    opacity: 0.8;
+}
+
+/* ================= FILTROS ================= */
+
+.filters {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    padding: 16px;
+    border-radius: 30px;
+    width: 90%;
+    max-width: 950px;
+}
+
+.filters select {
+    background: #fff;
+    border: 1px solid #912f2f;
+    border-radius: 30px;
+    padding: 8px 14px;
+    color: #912f2f;
+    font-family: 'Rubik', sans-serif;
+    cursor: pointer;
+}
+
+.filters button {
+    background: linear-gradient(90deg, #912F2F 60%, #6A1E1E 100%);
+    color: #fff;
+    border: none;
+    border-radius: 30px;
+    padding: 10px 24px;
+    font-size: 1rem;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.3s;
+}
+
+.filters button:hover {
+    transform: scale(1.03);
+    box-shadow: 0 6px 18px rgba(145, 47, 47, 0.2);
+}
+
+/* ================= CARDS ================= */
+
+.cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 32px 40px;
+    gap: 40px;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #fff;
+    border-radius: 4px;
+    padding: 4px;
+    cursor: pointer;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+    width: 300px;
+}
+
+.card:hover {
+    box-shadow: 0 6px 18px rgba(4, 4, 4, 0.166);
+    transform: translateY(-4px) scale(1.03);
+}
+
+.card h3 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin: 10px 0;
+    color: #912f2f;
+    font-family: 'Rubik', sans-serif;
+    text-align: center;
+}
