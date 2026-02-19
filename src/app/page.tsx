@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import styles from "./page.module.css";
+import Link from "next/link";
 
 interface Restaurante {
   id?: number;
@@ -108,14 +109,14 @@ export default function Home() {
               width={80}
               height={80}
             />
-            <span>Restaurantes San Cristóbal</span>
+            <span>Restaurantes Chiapa de Corzo</span>
           </div>
 
           <div className={styles.actions}>
             <button onClick={() => router.push("/registro")}>
               Registrarse
             </button>
-            <button onClick={() => router.push("/login")}>
+            <button onClick={() => router.push("/select-login")}>
               Iniciar sesión
             </button>
           </div>
@@ -128,6 +129,7 @@ export default function Home() {
           src="/images/fondo_inicio.png"
           alt="Fondo"
           fill
+          priority
           className={styles.heroImage}
         />
 
@@ -135,7 +137,7 @@ export default function Home() {
           <h1>
             Descubre la Magia Culinaria de
             <br />
-            San Cristóbal
+            Chiapa de Corzo
           </h1>
           <p>Explora los mejores sabores de esta tierra</p>
 
